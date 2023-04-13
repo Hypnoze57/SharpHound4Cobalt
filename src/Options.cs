@@ -45,7 +45,7 @@ namespace Sharphound
         [Option(HelpText = "Filename for cache (Defaults to a machine specific identifier)", Default = null)]
         public string CacheName { get; set; }
 
-        [Option(HelpText = "Keep cache in memory and don't write to disk")]
+        [Option(HelpText = "Keep cache in memory and don't write to disk", Default = true)]
         public bool MemCache { get; set; }
 
         [Option(HelpText = "Rebuild cache and remove all entries", Default = false)]

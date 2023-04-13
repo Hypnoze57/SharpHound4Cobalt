@@ -123,6 +123,17 @@ namespace Sharphound.Runtime
             return await FlushWriters();
         }
 
+
+        private void SendJson<T>(JsonDataWriter<T> writer)
+        {
+            if(writer._jsonMemoryStream != null)
+            {
+                writer._jsonMemoryStream.Seek(0, SeekOrigin.Begin);
+                CobaltRunner.Instance.PassDownloadFile(writer.GetFilename(), ref writer._jsonMemoryStream);
+            }
+        }
+
+
         private async Task<string> FlushWriters()
         {
             await _computerOutput.FlushWriter();
@@ -132,9 +143,22 @@ namespace Sharphound.Runtime
             await _gpoOutput.FlushWriter();
             await _ouOutput.FlushWriter();
             await _containerOutput.FlushWriter();
+
             CloseOutput();
+
+            SendJson(_computerOutput);
+            SendJson(_userOutput);
+            SendJson(_groupOutput);
+            SendJson(_domainOutput);
+            SendJson(_gpoOutput);
+            SendJson(_ouOutput);
+            SendJson(_containerOutput);
+
+            return null;
+            /*
             var fileName = ZipFiles();
             return fileName;
+            */
         }
 
         private string ZipFiles()

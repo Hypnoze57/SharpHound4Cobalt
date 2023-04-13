@@ -2,6 +2,31 @@
 SharpHound Open Source Client version: 1.0.4
 ---
 
+# SharpHound4Cobalt
+
+## Integration with Cobalt
+
+The SharpHound data (test file, json, zip, cache file) will not be written on the disk but only sent to Cobalt Strike downloads through [BOF.NET](https://github.com/CCob/BOF.NET) library.
+
+Thus, you must run it with Cobalt `bofnet` command otherwise the ingestor data will be lost.
+
+Only individual JSON files will be sent as it was the easiest way to keep this working on 'big' AD.
+
+## Usage
+
+All the options remain the same except those related to the ZIP file as they are not anymore relevant.
+```
+bofnet_init
+bofnet_load /path/to/SharpHound4Cobalt.exe
+bofnet_execute Sharphound.CobaltRunner -c All,GPOLocalGroup
+```
+
+## Credits
+
+[Williamknows](https://williamknowles.io/fetching-sharphound-data-entirely-in-memory-no-dropped-zip-or-json-files-using-bof-net-and-cobalt-strike/)
+[CCob](https://github.com/CCob/BOF.NET)
+
+
 # SharpHound
 
 ![GitHub all releases](https://img.shields.io/github/downloads/BloodHoundAD/SharpHound/total)
@@ -79,7 +104,7 @@ dotnet build
   --ldapport                 (Default: 0) Override port for LDAP
 
   --secureldap               (Default: false) Connect to LDAP SSL instead of regular LDAP
-  
+
   --disablecertverification  (Default: false) Disable certificate verification for secure LDAP
 
   --disablesigning           (Default: false) Disables Kerberos Signing/Sealing
@@ -87,7 +112,7 @@ dotnet build
   --skipportcheck            (Default: false) Skip checking if 445 is open
 
   --portchecktimeout         (Default: 500) Timeout for port checks in milliseconds
-  
+
   --skippasswordcheck        (Default: false) Skip PwdLastSet age check when checking computers
 
   --excludedcs               (Default: false) Exclude domain controllers from session/localgroup enumeration (mostly for

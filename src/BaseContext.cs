@@ -107,11 +107,12 @@ namespace Sharphound
 
             if (addTimestamp) finalFilename = $"{CurrentLoopTime}_{finalFilename}";
 
+            /*
             if (OutputPrefix != null) finalFilename = $"{OutputPrefix}_{finalFilename}";
 
             var finalPath = Path.Combine(OutputDirectory, finalFilename);
-
-            return finalPath;
+            */
+            return finalFilename;
         }
 
         public string[] Domains { get; set; }

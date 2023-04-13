@@ -116,6 +116,7 @@ namespace Sharphound
             if (context.LoopInterval == TimeSpan.Zero)
                 context.LoopInterval = TimeSpan.FromSeconds(30);
 
+            /*
             if (!context.Flags.NoOutput)
             {
                 var filename = context.ResolveFileName(Path.GetRandomFileName(), "", false);
@@ -133,7 +134,7 @@ namespace Sharphound
                     context.Flags.IsFaulted = true;
                 }
             }
-            
+            */
             context.Logger.LogTrace("Exiting initialize link");
 
             return context;

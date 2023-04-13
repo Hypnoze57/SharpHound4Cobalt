@@ -15,6 +15,7 @@ namespace Sharphound.Writers
     /// <typeparam name="T"></typeparam>
     public class JsonDataWriter<T> : BaseWriter<T>
     {
+        public MemoryStream _jsonMemoryStream = null;
         private JsonTextWriter _jsonWriter;
         private readonly IContext _context;
         private string _fileName;
@@ -41,17 +42,22 @@ namespace Sharphound.Writers
         /// <exception cref="FileExistsException"></exception>
         protected override void CreateFile()
         {
+            /*
             var filename = _context.ResolveFileName(DataType, "json", true);
             if (File.Exists(filename))
                 throw new FileExistsException($"File {filename} already exists. This should never happen!");
+            */
+            _fileName = _context.ResolveFileName(DataType, "json", true);
+            _jsonMemoryStream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(_jsonMemoryStream, Encoding.UTF8);
+            writer.AutoFlush = true;
 
-            _fileName = filename;
-
-            _jsonWriter = new JsonTextWriter(new StreamWriter(filename, false, Encoding.UTF8));
+            _jsonWriter = new JsonTextWriter(writer);
             _jsonWriter.Formatting = PrettyPrint;
             _jsonWriter.WriteStartObject();
             _jsonWriter.WritePropertyName("data");
             _jsonWriter.WriteStartArray();
+            _jsonWriter.CloseOutput = false;
         }
 
         /// <summary>
